@@ -1,5 +1,2 @@
-### DBConnetion REPL
-A basic REPL to accept SQL query and return result from DB
-
-### Resources
-- [sql-databases-in-go](https://betterstack.com/community/guides/scaling-go/sql-databases-in-go/)
+### RSS Feed aggregator
+following course [Go Programming – Golang Course with Bonus Projects](https://www.youtube.com/watch?v=un6ZyFkqFKo&t=197s)
