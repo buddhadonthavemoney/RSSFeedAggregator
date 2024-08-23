@@ -1,7 +1,6 @@
 package main
 
 import (
-	"dbconnection/internal/auth"
 	"dbconnection/internal/database"
 	"encoding/json"
 	"fmt"
@@ -37,18 +36,6 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 	respondWithJson(w, 200, databaseUserToUser(user))
 }
 
-func (apiCfg *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request){
-	apiKey, err := auth.GetAPIKey(r.Header)
-	fmt.Println("hereee")
-	if err != nil{
-		respondWithError(w, 403, fmt.Sprintf("Auth error: %v", err))
-		return 
-	}
-
-	user, err := apiCfg.DB.GetUserByAPIKey(r.Context(), apiKey)
-	if err != nil {
-		respondWithError(w, 400, fmt.Sprintf("Couldn't find user: %v", err))
-		return
-	}
+func (apiCfg *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request, user database.User){
 	respondWithJson(w, 200, databaseUserToUser(user))
 }
