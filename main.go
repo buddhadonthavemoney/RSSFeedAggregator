@@ -3,9 +3,11 @@ package main
 import (
 	"database/sql"
 	"dbconnection/internal/database"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -22,6 +24,11 @@ func init(){
 	godotenv.Load()
 }
 func main(){
+	feed, err := urlToFeed("https://wagslane.dev/index.xml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(feed)
 	portString := os.Getenv("PORT")
 	dbUrl := os.Getenv("CONNECTION_STRING")
 	if dbUrl == "" {
@@ -32,10 +39,13 @@ func main(){
 	if err != nil {
 		log.Fatal("Can't connect to database:", err)
 	}
-	dbQueries := database.New(conn)
+	db := database.New(conn)
 	apiCfg := apiConfig{
-		DB: dbQueries,
+		DB: db,
 	}
+
+	go startScraping(db, 10, time.Minute)
+
 
 
 	if portString == ""{
@@ -72,6 +82,7 @@ func main(){
 		Addr: ":"+portString,
 	}
 	log.Printf("server starting on port %v", portString)
+
 
 	log.Fatal(srv.ListenAndServe())
 	if err != nil {
