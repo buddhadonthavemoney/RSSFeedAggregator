@@ -39,6 +39,7 @@ func databaseFeedToFeed(dbFeed database.Feed) Feed {
 		ID:        dbFeed.ID,
 		CreatedAt: dbFeed.CreatedAt,
 		UpdatedAt: dbFeed.UpdatedAt,
+		Name:      dbFeed.Name,
 		Url:       dbFeed.Url,
 		UserID:    dbFeed.UserID,
 	}
@@ -72,9 +73,8 @@ func databaseFeedFollowToFeedFollow(dbFeedFollow database.FeedFollow) FeedFollow
 
 func databaseFeedFollowsToFeedFollows(dbFeedFollows []database.FeedFollow) []FeedFollow {
 	feedFollows := []FeedFollow{}
-	for _, dbFeedFollow := range dbFeedFollows{
+	for _, dbFeedFollow := range dbFeedFollows {
 		feedFollows = append(feedFollows, databaseFeedFollowToFeedFollow(dbFeedFollow))
 	}
 	return feedFollows
 }
-

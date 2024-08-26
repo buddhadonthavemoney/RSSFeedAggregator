@@ -21,7 +21,8 @@ func (apiCfg *apiConfig) handlerCreateFeedFollow(w http.ResponseWriter, r *http.
 	err := decoder.Decode(&params)
 
 	if err!= nil {
-		respondWithError(w, 400, fmt.Sprint("Error parsing JSON: %v", err))
+		respondWithError(w, 400, fmt.Sprintf("Error parsing JSON: %v", err))
+		return
 	}
 
 	feedFollows, err  := apiCfg.DB.CreateFeedFollows(r.Context(),database.CreateFeedFollowsParams {
@@ -34,7 +35,7 @@ func (apiCfg *apiConfig) handlerCreateFeedFollow(w http.ResponseWriter, r *http.
 
 	})
 	if err!= nil {
-		respondWithError(w, 400, fmt.Sprintf("Couldn't create user: %v", err))
+		respondWithError(w, 400, fmt.Sprintf("Couldn't create feedFollows: %v", err))
 		return
 	}
 
