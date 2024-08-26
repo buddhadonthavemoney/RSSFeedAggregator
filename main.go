@@ -74,6 +74,7 @@ func main(){
 	v1Router.Post("/feed-follow", apiCfg.middlewareAuth(apiCfg.handlerCreateFeedFollow))
 	v1Router.Get("/feed-follow", apiCfg.middlewareAuth(apiCfg.handlerGetFeedFollow))
 	v1Router.Delete("/feed-follow/{feedFollowID}", apiCfg.middlewareAuth(apiCfg.handlerRemoveFeedFollow))
+	v1Router.Get("/posts", apiCfg.middlewareAuth(apiCfg.handlerGetPosts))
 
 	router.Mount("/v1", v1Router)
 
